@@ -1,0 +1,80 @@
+erDiagram
+
+
+
+ESTOQUE {
+
+ID_PRODUTO Numeric FK "Not Null"
+NOME_PRODUTOPRODUTO Varchar2 "Not Null"
+ID_PEDIDO Numeric FK "Not Null"
+
+
+}
+
+
+
+
+
+
+    PEDIDOS{
+        ID_PEDIDO           Numeric PK "Not Null"
+        DATA          Date       "Not Null"
+        HORA          Datetime   "Not Null"
+        ID_COMPRADOR  Numeric FK "Not Null"
+        ID_PRODUTO    Numeric FK "Not Null"
+        ID_FORNECEDOR Numeric FK "Not Null"
+        QUANTIDADE    Numeric FK "Not Null"
+    }
+    PRODUTOS{
+        ID_PRODUTO        Numeric  PK "Not Null"
+        NOME_PRODUTO Varchar2 PK   "Not Null"
+        DESCRICAO Varchar2    "Not Null"
+        PRECO     Numeric     "Not Null"
+      QUANTIDADE   Numeric  "Not Null"
+    }
+
+    FORNECEDORES{
+        ID_FORNECEDOR Numeric PK "Not Null"
+        NOME_FORNECEDOR Varchar2 PK "Not Null"
+        CEP       Varchar2 "Not Null"
+        EMAIL     Varchar2 "Not Null"
+    }
+
+
+
+
+
+
+
+
+    ALMOXARIFE {
+        ID        Numeric  PK "Not Null"
+        NOME      Varchar2    "Not Null"
+        CEP       Varchar2    "Not Null"
+        EMAIL     Varchar2    "Not Null"
+    }
+
+
+
+
+
+
+
+
+
+    PAGAMENTOS{
+        ID        Numeric  PK "Not Null"
+        DATA      Date        "Not Null"
+        HORA      Datetime    "Not Null"
+        VALOR     Numeric     "Not Null"
+        ID_PEDIDO Numeric  FK "Not Null"
+    }
+
+
+
+    PEDIDOS      ||--o| PAGAMENTOS: ""
+
+    PEDIDOS      }|--|| FORNECEDORES: ""
+
+    ESTOQUE      ||--|{ PRODUTOS: ""
+     ESTOQUE      ||--|{ ALMOXARIFE: ""
