@@ -1,6 +1,8 @@
 
 
-menu_principal()
+
+
+
 
 def menu_principal():
     while True:
@@ -28,16 +30,16 @@ def menu_principal():
 
 def relatorios():
     print("\nRelatórios")
-    print("1. Sumarização de Estoque")
-    print("2. Relatório de Movimentações por Produto")
+    print("1. Estoque Baixo")
+    print("2. Quantidade Comprada")
 
     opcao = input("Escolha um relatório: ")
 
     if opcao == "1":
-        # Realizar o relatório de sumarização de estoque
+        # Relatorio Estoque Baixo
         pass
     elif opcao == "2":
-        # Realizar o relatório de movimentações por produto
+        # Relatorio Quantidade Comprada
         pass
 
 def inserir_registro():
