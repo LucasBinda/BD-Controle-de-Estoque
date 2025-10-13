@@ -1,81 +1,56 @@
 erDiagram
 
 
-
-ESTOQUE {
-
-ID_PRODUTO Numeric FK "Not Null"
-NOME_PRODUTO Varchar2 "Not Null"
-ID_PEDIDO Numeric FK "Not Null"
-
-
+PRODUTOS {
+Numeric ID_PRODUTO PK "NOT NULL"
+Varchar2 NOME_PRODUTO "NOT NULL"
+Varchar2 DESCRICAO "NULL"
+Numeric PRECO "NOT NULL"
+Numeric ESTOQUE_ATUAL "NOT NULL"
 }
 
+FORNECEDORES {
+Numeric ID_FORNECEDOR PK "NOT NULL"
+varchar NOME_FORNECEDOR "NOT NULL"
+varchar CEP "NULL"
+varchar EMAIL "NULL"
+}
 
+ALMOXARIFE {
+Numeric ID_ALMOXARIFE PK "NOT NULL"
+varchar2 NOME "NOT NULL"
+varchar2 CEP "NULL"
+varchar2 EMAIL "NULL"
+}
 
+%% TIPO == ENTRADA OU SAIDA
+PEDIDOS {
+Numeric ID_PEDIDO PK     "NOT NULL"
+Date DATA                "NOT NULL"
+Varchar2 TIPO            "NOT NULL"
+Numeric ID_PRODUTO    FK "NOT NULL"
+Numeric ID_FORNECEDOR FK "NULL"
+Numeric ID_ALMOXARIFE FK "NULL"
+Numeric QUANTIDADE       "NOT NULL"
+}
 
+ITENS_PEDIDO {
+Numeric ID_ITEM PK "NOT NULL"
+Numeric ID_PEDIDO FK "NOT NULL"
+Numeric ID_PRODUTO FK "NOT NULL"
+Numeric QUANTIDADE "NOT NULL"
+}
 
+PAGAMENTOS {
+Numeric ID_PAGAMENTO PK "NOT NULL"
+DATE DATA "NOT NULL"
+DATE HORA "NOT NULL"
+Numeric VALOR "NOT NULL"
+Numeric ID_PEDIDO FK "NOT NULL"
+}
 
-    PEDIDOS{
-        ID_PEDIDO           Numeric PK "Not Null"
-        DATA          Date       "Not Null"
-        HORA          Datetime   "Not Null"
-        ID_COMPRADOR  Numeric FK "Not Null"
-        ID_PRODUTO    Numeric FK "Not Null"
-        ID_FORNECEDOR Numeric FK "Not Null"
-        QUANTIDADE    Numeric FK "Not Null"
-    }
-    PRODUTOS{
-        ID_PRODUTO        Numeric  PK "Not Null"
-        NOME_PRODUTO Varchar2 PK   "Not Null"
-        DESCRICAO Varchar2    "Not Null"
-        PRECO     Numeric     "Not Null"
-      QUANTIDADE   Numeric  "Not Null"
-    }
-
-    FORNECEDORES{
-        ID_FORNECEDOR Numeric PK "Not Null"
-        NOME_FORNECEDOR Varchar2 PK "Not Null"
-        CEP       Varchar2 "Not Null"
-        EMAIL     Varchar2 "Not Null"
-    }
-
-
-
-
-
-
-
-
-    ALMOXARIFE {
-        ID        Numeric  PK "Not Null"
-        NOME      Varchar2    "Not Null"
-        CEP       Varchar2    "Not Null"
-        EMAIL     Varchar2    "Not Null"
-    }
-
-
-
-
-
-
-
-
-
-    PAGAMENTOS{
-        ID        Numeric  PK "Not Null"
-        DATA      Date        "Not Null"
-        HORA      Datetime    "Not Null"
-        VALOR     Numeric     "Not Null"
-        ID_PEDIDO Numeric  FK "Not Null"
-    }
-
-
-
-    PEDIDOS      ||--o| PAGAMENTOS: ""
-
-    PEDIDOS      }|--|| FORNECEDORES: ""
-
-    ESTOQUE      ||--|{ PRODUTOS: ""
-    ESTOQUE      ||--|{ ALMOXARIFE: ""
-    ESTOQUE      ||--|| PEDIDOS: ""
+FORNECEDORES ||--o{ PEDIDOS : "fornece"
+ALMOXARIFE ||--o{ PEDIDOS : "registra"
+PEDIDOS ||--o{ ITENS_PEDIDO : "contém"
+PRODUTOS ||--o{ ITENS_PEDIDO : "inclui"
+PEDIDOS ||--|| PAGAMENTOS : "gera"
