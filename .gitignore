@@ -1,3 +1,4 @@
 *.pdf
 /.venv/
 /.idea/
+/Python/connection/oracle/config.json
