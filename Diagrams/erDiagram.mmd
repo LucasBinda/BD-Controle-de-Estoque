@@ -35,9 +35,8 @@ Numeric QUANTIDADE       "NOT NULL"
 }
 
 ITENS_PEDIDO {
-Numeric ID_ITEM PK "NOT NULL"
-Numeric ID_PEDIDO FK "NOT NULL"
 Numeric ID_PRODUTO FK "NOT NULL"
+Numeric ID_PEDIDO FK "NOT NULL"
 Numeric QUANTIDADE "NOT NULL"
 }
 
@@ -49,8 +48,8 @@ Numeric VALOR "NOT NULL"
 Numeric ID_PEDIDO FK "NOT NULL"
 }
 
-FORNECEDORES ||--o{ PEDIDOS : "fornece"
-ALMOXARIFE ||--o{ PEDIDOS : "registra"
-PEDIDOS ||--o{ ITENS_PEDIDO : "contém"
-PRODUTOS ||--o{ ITENS_PEDIDO : "inclui"
-PEDIDOS ||--|| PAGAMENTOS : "gera"
+FORNECEDORES ||--o{ PEDIDOS : ""
+ALMOXARIFE ||--o{ PEDIDOS : ""
+PEDIDOS ||--o{ ITENS_PEDIDO : ""
+PRODUTOS ||--o{ ITENS_PEDIDO : ""
+PEDIDOS ||--|| PAGAMENTOS : ""
