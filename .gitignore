@@ -1,4 +1,6 @@
 *.pdf
 /.venv/
 /.idea/
-/Python/connection/oracle/config.json
+/Python/connection/config/config.json
+*.txt
+/Python/controller/*
