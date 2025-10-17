@@ -16,22 +16,22 @@ pip install -r requirements.txt
 Abra o terminal e acesse o diretorio do programa:
 
 
-Coloque os dados do seu Banco de Dados para o programa ter acesso em:
-```
-\config.txt
-```
 
 Você pode testar a conexão entre o programa e o Banco de Dados executando o arquivo test.py no diretorio /python/
 execute a linha abaixo dentro do terminal na pasta Python do programa:
 ```
-python .\test_connection.py
+python Python/test_connection.py
 ```
 
+ele vai pedir para você botar as credenciais do seu banco de dados em:
+```
+Python/connection/config/config.json
+```
 
 
 Execute o programa pelo terminal com:
 ```
-Python .\Main.py
+python Python/Main.py
 ```
 
 

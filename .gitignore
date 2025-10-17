@@ -1,6 +1,7 @@
-*.pdf
 /.venv/
 /.idea/
 /Python/connection/config/config.json
 *.txt
-/Python/controller/*
+.gitignore
+C2_Edital_Desenvolvimento_Banco_Relacional_-_Valor_8_Pontos_-_Grupo.pdf
+Python/connection/__pycache__/
