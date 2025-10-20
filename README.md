@@ -10,7 +10,7 @@ Programa de Controle de estoque usando banco de dados Oracle com SQL e manipula�
 ## Instalação bibliotecas Python
 Abra o terminal e acesse o diretorio do programa.
 
-[Python](Python) DB-Controle-de-Estoque/Python
+[Python](Python)
 
 instale as  bibliotecas necessarias com o comando:
 ```
@@ -45,7 +45,7 @@ Execute o programa principal pelo terminal de comandos com:
 python Main.py
 ```
 
-[Main](Python) localização do arquivo principal do programa.
+[Main](Python/Main.py) localização do arquivo principal do programa.
 
 
 ## Organização:
