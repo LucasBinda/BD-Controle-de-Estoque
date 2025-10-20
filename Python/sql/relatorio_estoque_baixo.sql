@@ -1,8 +1,7 @@
 SELECT
     id_produto,
     nome_produto,
-    descricao,
-    preco,
     estoque_atual
 FROM produtos
-ORDER BY nome_produto ASC
+WHERE estoque_atual <= 30   -- valor ajustavel
+ORDER BY estoque_atual ASC

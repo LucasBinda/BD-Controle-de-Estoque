@@ -2,6 +2,7 @@ import json
 import oracledb
 from pandas import DataFrame
 from pathlib import Path
+import pandas as pd
 ###############################################################
 #
 #
@@ -18,15 +19,35 @@ class DatabaseConnection:
         self.config = self._carregar_config()
         self._connection = None
         self._cur = None
+        #configurando o pandas
+        self.configurar_pandas()
+
+    def configurar_pandas(self):
+        pd.set_option('display.max_columns', None)          # Mostra TODAS as colunas
+        pd.set_option('display.width', None)                # largura ilimitada
+        pd.set_option('display.max_colwidth', None)         # larguma maxima das colunas
+        pd.set_option('display.expand_frame_repr', False)   # não quebrar linhas
+
+    def sqlToDataFrame(self, query:str) -> DataFrame: # retorna um modelo de dados da biblioteca Pandas
+        self._cur.execute(query)
+        rows = self._cur.fetchall()
+        return DataFrame(rows, columns=[col[0].lower() for col in self._cur.description])
 
 
-    def buscarData(self, sql_query) :
-        if self._cur is None:
-            self.conectar()
-        self._cur.execute(sql_query)
-        for result in self._cur :
-            print(result)
-        self._cur.close()
+    def sqlToMatrix(self, query:str) -> tuple: # retorna o query em formado de matrix
+        self._cur.execute(query)
+        rows = self._cur.fetchall()
+        matrix = [list(row) for row in rows]
+        columns = [col[0].lower() for col in self._cur.description]
+        return matrix, columns
+
+    def executarDDL(self, query:str): # esse metodo executa uma query especifica que for passada, serve para (CREATE TABLE, DROP TABLE, ALTER TABLE)
+        self._cur.execute(query)
+
+
+    def executarDML(self, query): # esse metodo executa uma query especifica que for passada, serve para (INSERT, UPDATE, DELETE)
+        self._cur.execute(query)
+        self._connection.commit() # TO-DO perigoso para os recursos do sistema, remover e fazer manualmente
 
 
     def conectar(self):  # estabelece conexão com o banco de dados
@@ -39,9 +60,9 @@ class DatabaseConnection:
                 dsn=self._get_connection_string()
             )
             self._cur = self._connection.cursor()
-            return self._connection, self._cur
+            return self._cur
         except Exception as e:
-            print(f"Erro ao conectar: {e}")
+            print(f"Erro ao conectar, cheque suas credenciais no arquivo config.json: {e}")
             return None
 
 
@@ -50,25 +71,6 @@ class DatabaseConnection:
             self._connection.close()
             self._connection = None
             self._cur = None
-
-
-    def sqlToDataFrame(self, query:str) -> DataFrame: # retorna um modelo de dados da biblioteca Pandas
-        if self._cur is None:
-            self.conectar()
-        self._cur.execute(query)
-        rows = self._cur.fetchall()
-        return DataFrame(rows, columns=[col[0].lower() for col in self._cur.description])
-
-
-    def sqlToMatrix(self, query:str) -> tuple:
-        if self._cur is None:
-            self.conectar()
-        self._cur.execute(query)
-        rows = self._cur.fetchall()
-        matrix = [list(row) for row in rows]
-        columns = [col[0].lower() for col in self._cur.description]
-        return matrix, columns
-
 
 
 
@@ -83,7 +85,8 @@ class DatabaseConnection:
             
             PASSO A PASSO de configuração:
             1. Edite 'Python/config/config.json' com suas credenciais reais
-            2. Use SOMENTE service_name OU sid (deixe o outro como null) e não remova "" de onde elas estiverem
+            2. Use SOMENTE service_name OU sid (deixe o outro como null) e não remova "" de onde elas 
+            3. Apos configurar rode o programa novamente, para checar se está tudo correto
             """
             )
 
