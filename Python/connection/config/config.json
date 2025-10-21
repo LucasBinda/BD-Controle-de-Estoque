@@ -1,0 +1,10 @@
+{
+    "database": {
+        "username": "SYSTEM",
+        "password": "sua_senha",
+        "host": "localhost",
+        "port": 1521,
+        "service_name": "XE",
+        "sid": null
+    }
+}
